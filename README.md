@@ -38,6 +38,10 @@ The model is trained on **300,000+ real-world flight records** and achieves **st
 
 ## 🖼 **Screenshots**  
 
+<img width="1898" height="1073" alt="Screenshot 2025-07-27 140908" src="https://github.com/user-attachments/assets/1b0861de-8b89-4dbb-a7a7-de1332d897eb" />
+<img width="1898" height="1071" alt="Screenshot 2025-07-27 140926" src="https://github.com/user-attachments/assets/84c2145f-8f4e-4fa2-a8c5-3b5e2bea6eaf" />
+
+
 
 ---
 
