@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkyFlights - Book Your Flight</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">✈ SkyFlights</div>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="#" id="about-btn">About</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="hero-content">
+      <h1>Find the Best Flight Deals</h1>
+      <p>ML-powered airfare predictions to secure the best deals.</p>
+    </div>
+  </header>
+
+  <!-- Form Section -->
+  <section class="form-section">
+    <div class="form-container">
+      <h2>🛫 Book Your Flight</h2>
+      <form action="/predict" method="post">
+        <div class="form-grid">
+          <select name="airline" required>
+            <option value="">Select Airline</option>
+            {% for val in dropdown_data['airline'] %}
+              <option value="{{ val }}">{{ val }}</option>
+            {% endfor %}
+          </select>
+
+          <select name="flight" required>
+            <option value="">Select Flight</option>
+            {% for val in dropdown_data['flight'] %}
+              <option value="{{ val }}">{{ val }}</option>
+            {% endfor %}
+          </select>
+
+          <select name="source_city" required>
+            <option value="">Source City</option>
+            {% for val in dropdown_data['source_city'] %}
+              <option value="{{ val }}">{{ val }}</option>
+            {% endfor %}
+          </select>
+
+          <select name="departure_time" required>
+            <option value="">Departure Time</option>
+            {% for val in dropdown_data['departure_time'] %}
+              <option value="{{ val }}">{{ val }}</option>
+            {% endfor %}
+          </select>
+
+          <select name="arrival_time" required>
+            <option value="">Arrival Time</option>
+            {% for val in dropdown_data['arrival_time'] %}
+              <option value="{{ val }}">{{ val }}</option>
+            {% endfor %}
+          </select>
+
+          <select name="destination_city" required>
+            <option value="">Destination City</option>
+            {% for val in dropdown_data['destination_city'] %}
+              <option value="{{ val }}">{{ val }}</option>
+            {% endfor %}
+          </select>
+
+          <select name="class" required>
+            <option value="">Class</option>
+            {% for val in dropdown_data['class'] %}
+              <option value="{{ val }}">{{ val }}</option>
+            {% endfor %}
+          </select>
+
+          <input type="number" name="duration" step="0.1" placeholder="Duration (hrs)" required>
+          <input type="number" name="days_left" placeholder="Days Left" required>
+
+          <select name="stops" required>
+            <option value="">Stops</option>
+            {% for val in stops_options %}
+              <option value="{{ val }}">{{ val.capitalize() }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <button type="submit" class="primary-btn">🎯 Predict Price</button>
+      </form>
+
+      {% if prediction %}
+        <div class="result-card" id="prediction-result">
+          <h2>🎯 Predicted Price: <span>{{ prediction }}</span></h2>
+          <div class="flight-summary">
+            <p><strong>Airline:</strong> {{ form_data['airline'] }}</p>
+            <p><strong>Flight:</strong> {{ form_data['flight'] }}</p>
+            <p><strong>From:</strong> {{ form_data['source_city'] }} ➝ {{ form_data['destination_city'] }}</p>
+            <p><strong>Departure:</strong> {{ form_data['departure_time'] }} | <strong>Arrival:</strong> {{ form_data['arrival_time'] }}</p>
+            <p><strong>Class:</strong> {{ form_data['class'] }}</p>
+            <p><strong>Duration:</strong> {{ form_data['duration'] }} hrs | <strong>Days Left:</strong> {{ form_data['days_left'] }}</p>
+            <p><strong>Stops:</strong> {{ form_data['stops'].capitalize() }}</p>
+          </div>
+          <a href="/predictor" class="retry-btn">🔄 Try Another Flight</a>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- About Modal -->
+  <div class="about-modal" id="about-modal">
+    <div class="about-content">
+      <span class="close-btn" id="close-about">&times;</span>
+      <h2>About SkyFlights✈️</h2>
+      <p>SkyFlights uses cutting-edge ML to predict flight prices, helping travelers make smarter booking decisions. We analyze airlines, cities, timings, and more to get you the best deals!</p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // About Modal
+    document.getElementById('about-btn').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('about-modal').style.display = 'flex';
+    });
+    document.getElementById('close-about').addEventListener('click', function() {
+      document.getElementById('about-modal').style.display = 'none';
+    });
+    window.onclick = function(e) {
+      if (e.target === document.getElementById('about-modal')) {
+        document.getElementById('about-modal').style.display = 'none';
+      }
+    };
+
+    // Auto scroll to prediction result
+    window.addEventListener('load', function() {
+      const predictionSection = document.getElementById('prediction-result');
+      if (predictionSection) {
+        predictionSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  </script>
+
+</body>
+</html>
