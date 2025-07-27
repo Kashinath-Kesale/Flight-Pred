@@ -53,9 +53,3 @@ pip install -r requirements.txt
 # Run the Flask app
 python app.py
 
-
-# MIT License
-
-Copyright (c) 2025 Kashinath Kesale
-
-
